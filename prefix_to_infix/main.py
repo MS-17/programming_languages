@@ -51,7 +51,7 @@ def prefix_to_infix(expr, operators):
     return result[0]
 
 
-def main(flag=0):
+def main(test_flag=False):
     operators = ["+", "-", "*", "/"]
 
     # prefix_str1 = "+ - 13 4 55"
@@ -62,7 +62,7 @@ def main(flag=0):
             break
         except InvalidExpressionError as e:
             print("Incorrect expression. Please, try again")
-            if flag == 1:
+            if test_flag == True:
                 return -1
 
     print(f"Prefix to infix conversion result for {user_input}: {res}")

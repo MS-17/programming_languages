@@ -1,7 +1,7 @@
 import builtins
 import mock
 import pytest
-from main import prefix_to_infix, postfix_to_infix, InvalidExpressionError, main
+from .main import prefix_to_infix, postfix_to_infix, InvalidExpressionError, main
 
 
 @pytest.fixture
@@ -10,9 +10,9 @@ def operators():
 
 
 class TestPrefixToInfix:
-    def test_main_input_error(self, monkeypatch):
+    def test_main_input_error(self):
         with mock.patch.object(builtins, 'input', lambda _: "- - 2 2"):
-            assert main(1) == -1
+            assert main(test_flag=True) == -1
 
     def test_main_returns_0(self):
         with mock.patch.object(builtins, 'input', lambda _: "- - 2 2 2"):
