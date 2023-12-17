@@ -19,35 +19,32 @@ class Token():
 class Tokenizer():
 	def __init__(self, text):
 		self._text = text
-		# self._accumulator = None
 		self._current_pos = 0
 
 
-	# def _is_number(self, char):
-	# 	return char.isdigit()
-
-
-	# get the whole number
+	# the goal of this function is to get the whole number
+	# move forward until encounter a space
 	def _move_forward(self):
 		res = []
-		while self._text[self._current_pos] != " " and self._current_pos + 1 != len(self._text):
-			print("Loop", self._text, self._text[self._current_pos])
+
+		# problem: index out of range for ex 45.4 + 66 => in the end there'll be index out of range
+		while self._text[self._current_pos] != " ":
+			# print("Loop", self._text, self._text[self._current_pos])
 			if self._text[self._current_pos].isdigit() or self._text[self._current_pos] == ".":
 				res.append(self._text[self._current_pos])
 			self._current_pos += 1
-			print(self._current_pos)
+			# print(self._current_pos)
+			if self._current_pos == len(self._text):
+				break
 		return "".join(res)
 
 
 	def get_tokens(self):
 		tokens = []
-		# for char in self._text:
 		while self._current_pos != len(self._text):
 			# print(f"Current character: {char}")
 			char = self._text[self._current_pos]
 			if char.isdigit():
-				# move forward until encounter a space or \t or \n
-				# I need an accumulator that will store a number as a string to then convert it to the Token 
 				number = self._move_forward()
 				tokens.append(Token(TokenType.INTEGER, number))
 				continue
@@ -56,9 +53,6 @@ class Tokenizer():
 			elif char == "-":
 				tokens.append(Token(TokenType.MINUS, char))
 			self._current_pos += 1
-
-		# make 45  +6 work (45 is now divided)
-		# add floats
 
 		return tokens
 
