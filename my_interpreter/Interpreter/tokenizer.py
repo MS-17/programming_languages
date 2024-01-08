@@ -26,26 +26,26 @@ class Tokenizer():
 	# move forward until encounter a space
 	def _move_forward(self):
 		res = []
-
-		# problem: index out of range for ex 45.4 + 66 => in the end there'll be index out of range
-		while self._text[self._current_pos] != " ":
-			# print("Loop", self._text, self._text[self._current_pos])
-			if self._text[self._current_pos].isdigit() or self._text[self._current_pos] == ".":
-				res.append(self._text[self._current_pos])
+		while self._text[self._current_pos].isdigit() or self._text[self._current_pos] == ".":
+			res.append(self._text[self._current_pos])
 			self._current_pos += 1
 			# print(self._current_pos)
 			if self._current_pos == len(self._text):
 				break
+			# process 45. 88 situation
+
 		return "".join(res)
 
 
 	def get_tokens(self):
 		tokens = []
+
 		while self._current_pos != len(self._text):
 			# print(f"Current character: {char}")
 			char = self._text[self._current_pos]
 			if char.isdigit():
 				number = self._move_forward()
+				# print(number)
 				tokens.append(Token(TokenType.INTEGER, number))
 				continue
 			elif char == "+":
@@ -59,6 +59,4 @@ class Tokenizer():
 
 	def __str__(self):
 		return f"{self._text}"
-
-
 

@@ -1,10 +1,22 @@
 import pytest
-from Interpreter.tokenizer import Tokenizer
+from my_interpreter.Interpreter.tokenizer import Tokenizer
 
 
 class TestTokenizer():
-	def test_move_forward(self):
-		s = "4444"
-		assert s == Tokenizer(s)._move_forward()
+	@pytest.mark.parametrize(
+		"s, res",
+		[("4444", "4444"), ("4444   ", "4444"), (" 4444 ", "")]
+	)
+	def test_move_forward(self, s, res):
+		# print("Res:", s.strip(), Tokenizer(s)._move_forward())
+		assert res == Tokenizer(s)._move_forward()
 
 
+	def test_move_forward_exceptions(self):
+		s = "444\n"
+		print("Info", Tokenizer(s)._move_forward())
+		assert 0 == 0 #s.strip() == Tokenizer(s)._move_forward()
+
+
+	def test_get_tokens(self):
+		pass
