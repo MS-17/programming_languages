@@ -2,9 +2,10 @@ from enum import Enum, auto
 
 
 class TokenType(Enum):
-	PLUS = auto()
-	MINUS = auto()
-	INTEGER = auto()
+	# PLUS = auto()
+	# MINUS = auto()
+	OPERATOR = auto()
+	NUMBER = auto()
 
 
 class Token():
@@ -33,7 +34,6 @@ class Tokenizer():
 			if self._current_pos == len(self._text):
 				break
 			# process 45. 88 situation
-
 		return "".join(res)
 
 
@@ -46,12 +46,10 @@ class Tokenizer():
 			if char.isdigit():
 				number = self._move_forward()
 				# print(number)
-				tokens.append(Token(TokenType.INTEGER, number))
+				tokens.append(Token(TokenType.NUMBER, number))
 				continue
-			elif char == "+":
-				tokens.append(Token(TokenType.PLUS, char))
-			elif char == "-":
-				tokens.append(Token(TokenType.MINUS, char))
+			elif char in ["+", "-", "*", "/"]:
+				tokens.append(Token(TokenType.OPERATOR, char))
 			self._current_pos += 1
 
 		return tokens
